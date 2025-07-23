@@ -2,17 +2,17 @@ import java.util.ArrayList;
 
 public class Account {
     private double balance;
-    private ArrayList<Transaction> transactions;
+    private ArrayList<Transaction> transitionList;
 
     public Account() {
         this.balance = 0.0;
-        this.transactions = new ArrayList<>();
+        this.transitionList = new ArrayList<>();
     }
 
     private void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
-            transactions.add(new Transaction(Transaction.DEPOSIT, amount, balance));
+            transitionList.add(new Transaction(Transaction.DEPOSIT, amount, balance));
         } else {
             System.out.println("So tien ban nap vao khong hop le!");
         }
@@ -25,7 +25,7 @@ public class Account {
             System.out.println("So tien ban rut vuot qua so du!");
         } else {
             balance -= amount;
-            transactions.add(new Transaction(Transaction.WITHDRAW, amount, balance));
+            transitionList.add(new Transaction(Transaction.WITHDRAW, amount, balance));
         }
     }
 
@@ -40,12 +40,11 @@ public class Account {
     }
 
     public void printTransaction() {
-        for (int i = 0; i < transactions.size(); i++) {
-            Transaction t = transactions.get(i);
-            String op = t.getOperation().equalsIgnoreCase(Transaction.DEPOSIT)
-                        ? "Nap tien" : "Rut tien";
+        for (int i = 0; i < transitionList.size(); i++) {
+            Transaction t = transitionList.get(i);
+            String op = t.getOperation().equalsIgnoreCase(Transaction.DEPOSIT) ? "Nap tien" : "Rut tien";
             System.out.printf("Giao dich %d: %s $%.2f. So du luc nay: $%.2f.\n",
-                              i + 1, op, t.getAmount(), t.getBalance());
+                    i + 1, op, t.getAmount(), t.getBalance());
         }
     }
 }
