@@ -1,14 +1,27 @@
 import java.util.ArrayList;
 
+/**
+ * Lớp Account đại diện cho tài khoản ngân hàng,
+ * bao gồm số dư hiện tại và danh sách các giao dịch đã thực hiện.
+ */
 public class Account {
-    private double balance;
-    private ArrayList<Transaction> transitionList;
+    private double balance; // Số dư tài khoản
+    private ArrayList<Transaction> transitionList; // Danh sách các giao dịch
 
+    /**
+     * Khởi tạo một tài khoản mới với số dư ban đầu là 0.
+     */
     public Account() {
         this.balance = 0.0;
         this.transitionList = new ArrayList<>();
     }
 
+    /**
+     * Thực hiện nạp tiền vào tài khoản.
+     * Nếu số tiền hợp lệ, cập nhật số dư và ghi nhận giao dịch.
+     *
+     * @param amount số tiền cần nạp
+     */
     private void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -18,6 +31,12 @@ public class Account {
         }
     }
 
+    /**
+     * Thực hiện rút tiền từ tài khoản.
+     * Kiểm tra tính hợp lệ trước khi cập nhật số dư và ghi nhận giao dịch.
+     *
+     * @param amount số tiền cần rút
+     */
     private void withdraw(double amount) {
         if (amount <= 0) {
             System.out.println("So tien ban rut ra khong hop le!");
@@ -29,6 +48,12 @@ public class Account {
         }
     }
 
+    /**
+     * Thêm một giao dịch vào danh sách, gọi đúng loại nạp hoặc rút.
+     *
+     * @param amount    số tiền giao dịch
+     * @param operation loại giao dịch: "DEPOSIT" hoặc "WITHDRAW"
+     */
     public void addTransaction(double amount, String operation) {
         if (operation.equalsIgnoreCase(Transaction.DEPOSIT)) {
             deposit(amount);
@@ -39,12 +64,17 @@ public class Account {
         }
     }
 
+    /**
+     * Hiển thị thông tin về tất cả các giao dịch đã thực hiện.
+     * Số tiền và số dư được làm tròn đến hai chữ số thập phân.
+     */
     public void printTransaction() {
         for (int i = 0; i < transitionList.size(); i++) {
             Transaction t = transitionList.get(i);
-            String op = t.getOperation().equalsIgnoreCase(Transaction.DEPOSIT) ? "Nap tien" : "Rut tien";
+            String op = t.getOperation().equalsIgnoreCase(Transaction.DEPOSIT)
+                        ? "Nap tien" : "Rut tien";
             System.out.printf("Giao dich %d: %s $%.2f. So du luc nay: $%.2f.\n",
-                    i + 1, op, t.getAmount(), t.getBalance());
+                              i + 1, op, t.getAmount(), t.getBalance());
         }
     }
 }
